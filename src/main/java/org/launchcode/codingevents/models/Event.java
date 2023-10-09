@@ -13,15 +13,27 @@ public class Event {
     @NotBlank(message = "Email is required.")
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
+
+    @NotBlank(message = "Location is required")
+    private String location;
+
+    //@AssertTrue(message = "Registration is required")
+    private boolean registered = true;
+
+    @Positive(message="Number of attendees must be one or more.")
+    private int numberOfAttendees;
     private int id;
     private static int nextId=1;
 
 
-    public Event(String name, String description, String contactEmail) {
+    public Event(String name, String description, String contactEmail, String location, int numberOfAttendees, boolean registered ) {
         this.id = nextId;
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.registered = registered;
+        this.location = location;
+        this.numberOfAttendees =numberOfAttendees;
         nextId++;
     }
 
@@ -33,6 +45,26 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public int getNumberOfAttendees() {
+        return numberOfAttendees;
+    }
+
+    public void setNumberOfAttendees(int numberOfAttendees) {
+        this.numberOfAttendees = numberOfAttendees;
     }
 
     public int getId(){

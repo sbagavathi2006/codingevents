@@ -29,6 +29,29 @@
         </div>
         <br>
         <div class="form-group">
+                <label>Location
+                        <input th:field="${event.location}" class="form-control">
+                </label>
+                <p class="error" th:errors="${event.location}"></p>
+        </div>
+        <br>
+        <div class="form-group">
+                <label>Is Registration Completed</label>
+                <div>
+                        <input type="radio" th:field="${event.registered}" value="true"> Yes
+<!--                        <input type="radio" th:field="${event.registered}" value="false"> No-->
+<!--                </div>-->
+                <p class="error" th:errors="${event.registered}"></p>
+        </div>
+        <br>
+        <div class="form-group">
+                <label>No. of Attendees
+                        <input th:field="${event.numberOfAttendees}" class="form-control">
+                </label>
+                <p class="error" th:errors="${event.numberOfAttendees}"></p>
+        </div>
+        <br>
+        <div class="form-group">
                 <label>
                         <input type="submit" value="Create Event" class="btn btn-success">
                 </label>
