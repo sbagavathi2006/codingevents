@@ -17,7 +17,7 @@ public class Event {
     @NotBlank(message = "Location is required")
     private String location;
 
-    //@AssertTrue(message = "Registration is required")
+    @AssertTrue(message = "Registration is required")
     private boolean registered = true;
 
     @Positive(message="Number of attendees must be one or more.")
@@ -25,19 +25,40 @@ public class Event {
     private int id;
     private static int nextId=1;
 
+    private EventType type;
 
-    public Event(String name, String description, String contactEmail, String location, int numberOfAttendees, boolean registered ) {
-        this.id = nextId;
+    public Event(String name, String description, String contactEmail, EventType type) {
+        this();
+        this.name = name;
+        this.description = description;
+        this.contactEmail = contactEmail;
+        this.type = type;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+
+    public Event(String name, String description, String contactEmail, String location, int numberOfAttendees, boolean registered) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
         this.registered = registered;
         this.location = location;
         this.numberOfAttendees =numberOfAttendees;
+    }
+
+    public Event(){
+        this.id = nextId;
         nextId++;
     }
 
-    public Event(){}
 
     public String getContactEmail() {
         return contactEmail;
