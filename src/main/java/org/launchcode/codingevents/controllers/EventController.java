@@ -2,8 +2,10 @@ package org.launchcode.codingevents.controllers;
 
 import jakarta.validation.Valid;
 import org.launchcode.codingevents.data.EventData;
+import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 import org.launchcode.codingevents.models.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,12 +20,14 @@ import java.util.Map;
 @RequestMapping("events")
 public class EventController {
 //    private static List<Event> events = new ArrayList<>();
+    @Autowired
+    private EventRepository eventRepository;
     @GetMapping
     public String displayAllEvents(Model model){
 //        events.put("Menteaship","A fun meetup for connecting with mentors");
 //        events.put("Code With Pride","A fun meetup sponsored by LaunchCode");
 //        events.put("Javascripty", "An imaginary meetup for Javascript developers");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         model.addAttribute("title", "All Events");
         return "events/index";
     }
@@ -43,14 +47,15 @@ public class EventController {
 //            model.addAttribute("errorMsg", "Bad Data!!");
             return "events/create";
         }
-        EventData.add(newEvent);
+//        EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:/events";
     }
     //lives at /events/delete
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model) {
         model.addAttribute("title","Delete Event");
-        model.addAttribute("events",EventData.getAll());
+        model.addAttribute("events",eventRepository.findAll());
         return "events/delete";
     }
 
@@ -59,7 +64,8 @@ public class EventController {
 
         if (eventIds != null) {
             for (int id : eventIds) {
-                EventData.remove(id);
+//                EventData.remove(id);
+                eventRepository.deleteById(id);
             }
         }
 
@@ -69,6 +75,7 @@ public class EventController {
     //lives at /events/edit/{eventId}
     @GetMapping("edit/{eventId}")
     public String displayEditForm(Model model, @PathVariable int eventId){
+//        Event eventToEdit = EventData.getByID(eventId);
         Event eventToEdit = EventData.getByID(eventId);
         model.addAttribute("event", eventToEdit);
         String title = "Edit Event:  " + eventToEdit.getName();
