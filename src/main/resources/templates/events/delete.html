@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<!--<h1>Delete Event</h1>-->
+<header th:replace="fragments :: navigation"></header>
+<form method="post" action="/events/delete">
+    <th:block th:each="event : ${events}">
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="eventIds" th:value="${event.id}">
+                <span th:text="${event.name}"></span><br>
+            </label>
+        </div>
+    </th:block>
+    <div class="form-group">
+        <label>
+            <input type="submit" value="Delete Event" class="btn btn-danger">
+        </label>
+    </div>
+</form>
+</body>
+</html>
