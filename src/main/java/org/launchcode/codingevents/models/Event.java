@@ -7,10 +7,10 @@ import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 @Entity
-public class Event {
-    @Id
-    @GeneratedValue
-    private int id;
+public class Event extends AbstractEntity{
+//    @Id
+//    @GeneratedValue
+//    private int id;
 //    private static int nextId=1;
     @NotBlank(message = "Name is required.")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
@@ -89,9 +89,9 @@ public class Event {
         this.numberOfAttendees = numberOfAttendees;
     }
 
-    public int getId(){
-        return id;
-    }
+//    public int getId(){
+//        return id;
+//    }
 
     public String getName() {
         return name;
@@ -111,16 +111,16 @@ public class Event {
     public String toString() {
         return name;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Event event = (Event) o;
+//        return id == event.id;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id);
+//    }
 }
