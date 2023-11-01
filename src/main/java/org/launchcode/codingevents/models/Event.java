@@ -3,6 +3,7 @@ package org.launchcode.codingevents.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 
 import java.util.Objects;
@@ -29,26 +30,29 @@ public class Event extends AbstractEntity{
 
     @Positive(message="Number of attendees must be one or more.")
     private int numberOfAttendees;
-    private EventType type;
+//    private EventType type;
+    @ManyToOne
+    @NotNull(message = "Category is required")
+    private EventCategory eventCategory;
 
-    public Event(String name, String description, String contactEmail, EventType type) {
+    public Event(String name, String description, String contactEmail, EventCategory eventCategory) {
 //        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
-        this.type = type;
+        this.eventCategory = eventCategory;
     }
     public Event(){
 //        this.id = nextId;
 //        nextId++;
     }
 
-    public EventType getType() {
-        return type;
+    public EventCategory getEventCategory() {
+        return eventCategory;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
+    public void setEventCategory(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
 
 
