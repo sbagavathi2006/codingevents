@@ -6,16 +6,14 @@ import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 //import org.launchcode.codingevents.models.EventType;
+import org.launchcode.codingevents.models.EventCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("events")
@@ -26,12 +24,23 @@ public class EventController {
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
     @GetMapping
-    public String displayAllEvents(Model model){
+    public String displayAllEvents(@RequestParam(required = false) Integer categoryId, Model model){
 //        events.put("Menteaship","A fun meetup for connecting with mentors");
 //        events.put("Code With Pride","A fun meetup sponsored by LaunchCode");
 //        events.put("Javascripty", "An imaginary meetup for Javascript developers");
-        model.addAttribute("events", eventRepository.findAll());
-        model.addAttribute("title", "All Events");
+       if(categoryId == null) {
+           model.addAttribute("events", eventRepository.findAll());
+           model.addAttribute("title", "All Events");
+       }else {
+           Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
+           if(result.isEmpty()){
+               model.addAttribute("title","Invalid Category ID: " + categoryId);
+           } else {
+               EventCategory category = result.get();
+               model.addAttribute("title", "Events in Category: " + category.getName());
+               model.addAttribute("events", category.getEvents());
+           }
+       }
         return "events/index";
     }
 //lives at /events/create
