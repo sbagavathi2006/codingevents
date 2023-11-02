@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.*;
 
+
 @Entity
 public class EventDetails extends AbstractEntity{
     @OneToOne(mappedBy = "eventDetails")
