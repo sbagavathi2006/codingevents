@@ -1,9 +1,7 @@
 package org.launchcode.codingevents.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.util.Objects;
@@ -16,31 +14,20 @@ public class Event extends AbstractEntity{
     @NotBlank(message = "Name is required.")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
-    @Size(max = 500, message = "Description too long!")
-    private String description;
-    @NotBlank(message = "Email is required.")
-    @Email(message = "Invalid email. Try again.")
-    private String contactEmail;
-
-    @NotBlank(message = "Location is required")
-    private String location;
-
-    @AssertTrue(message = "Registration is required")
-    private boolean registered = true;
-
-    @Positive(message="Number of attendees must be one or more.")
-    private int numberOfAttendees;
 //    private EventType type;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
     @ManyToOne
     @NotNull(message = "Category is required")
     private EventCategory eventCategory;
 
-    public Event(String name, String description, String contactEmail, EventCategory eventCategory) {
+    public Event(String name, EventCategory eventCategory, EventDetails eventDetails) {
 //        this();
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
         this.eventCategory = eventCategory;
+        this.eventDetails = eventDetails;
     }
     public Event(){
 //        this.id = nextId;
@@ -55,45 +42,14 @@ public class Event extends AbstractEntity{
         this.eventCategory = eventCategory;
     }
 
-
-    public Event(String name, String description, String contactEmail, String location, int numberOfAttendees, boolean registered) {
-        this();
-        this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
-        this.registered = registered;
-        this.location = location;
-        this.numberOfAttendees =numberOfAttendees;
-    }
-    public String getContactEmail() {
-        return contactEmail;
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
 
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public int getNumberOfAttendees() {
-        return numberOfAttendees;
-    }
-
-    public void setNumberOfAttendees(int numberOfAttendees) {
-        this.numberOfAttendees = numberOfAttendees;
-    }
-
-//    public int getId(){
+    //    public int getId(){
 //        return id;
 //    }
 
@@ -105,12 +61,6 @@ public class Event extends AbstractEntity{
         this.name = name;
     }
 
-    public String getDescription(){
-        return description;
-    }
-    public void setDescription(String description){
-        this.description =description;
-    }
     @Override
     public String toString() {
         return name;

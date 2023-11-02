@@ -7,6 +7,7 @@ import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.models.Event;
 //import org.launchcode.codingevents.models.EventType;
 import org.launchcode.codingevents.models.EventCategory;
+import org.launchcode.codingevents.models.EventDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -96,10 +97,10 @@ public class EventController {
     }
 
     @PostMapping("edit")
-    public String processEditEventsForm(int eventId, String name, String  description) {
+    public String processEditEventsForm(int eventId, String name, EventDetails eventDetails) {
         Event eventToEdit = EventData.getByID(eventId);
         eventToEdit.setName(name);
-        eventToEdit.setDescription(description);
+//        eventToEdit.setEventDetails(new EventDetails());
         return "redirect:/events";
     }
 }
